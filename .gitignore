@@ -1,0 +1,67 @@
+# --- Секрети та змінні оточення ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+id_rsa*
+secrets/
+credentials*.json
+service-account*.json
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# --- Тести й лінтери ---
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+coverage/
+
+# --- Node / фронтенд ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Бази даних і дампи ---
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.sql.gz
+
+# --- Логи ---
+logs/
+*.log
+
+# --- Docker ---
+docker-compose.override.yml
+
+# --- IDE / ОС ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- Локальні налаштування інструментів ---
+.claude/settings.local.json
