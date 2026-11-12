@@ -1,0 +1,13 @@
+line-length = 130
+target-version = "py312"
+extend-exclude = ["migrations/versions"]
+
+[lint]
+select = ["E", "F", "W", "B"]
+# B008 — Depends() у дефолтах аргументів це стандартний підхід FastAPI
+ignore = ["B008"]
+
+[lint.per-file-ignores]
+# conftest задає змінні оточення до імпорту застосунку
+"tests/conftest.py" = ["E402", "E501"]
+"tests/*.py" = ["E501"]
