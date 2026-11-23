@@ -2,6 +2,16 @@ import { tokenStorage } from './tokenStorage'
 
 const API_URL = import.meta.env.VITE_API_URL ?? '/api'
 
+// Демо-збірка для GitHub Pages: бекенду немає, API емулюється в браузері
+const DEMO = import.meta.env.VITE_DEMO === 'true'
+let demoServer = null
+
+async function apiFetch(url, init) {
+  if (!DEMO) return fetch(url, init)
+  demoServer ??= import('./demo/server')
+  return (await demoServer).demoFetch(url, init)
+}
+
 export class ApiError extends Error {
   constructor(status, message) {
     super(message)
@@ -40,7 +50,7 @@ let refreshPromise = null
 
 function refreshTokens() {
   if (!refreshPromise) {
-    refreshPromise = fetch(buildUrl('/auth/refresh'), {
+    refreshPromise = apiFetch(buildUrl('/auth/refresh'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ refresh_token: tokenStorage.refresh }),
@@ -74,7 +84,7 @@ export async function request(path, { method = 'GET', params, body, form, raw = 
     payload = JSON.stringify(body)
   }
 
-  const response = await fetch(buildUrl(path, params), { method, headers, body: payload })
+  const response = await apiFetch(buildUrl(path, params), { method, headers, body: payload })
 
   if (response.status === 401 && retry && tokenStorage.refresh) {
     if (await refreshTokens()) {
