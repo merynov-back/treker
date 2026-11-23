@@ -4,6 +4,9 @@ import { Button, Card, ErrorMessage, Field } from '../components/ui'
 import { useAuth } from '../context/AuthContext'
 import styles from './AuthPage.module.css'
 
+const DEMO = import.meta.env.VITE_DEMO === 'true'
+const DEMO_ACCOUNT = { email: 'demo@treker.app', password: 'demo12345' }
+
 export default function LoginPage() {
   const { login } = useAuth()
   const [form, setForm] = useState({ email: '', password: '' })
@@ -28,9 +31,18 @@ export default function LoginPage() {
     <div className={styles.page}>
       <div className={styles.box}>
         <div className={styles.brand}>
-          <img src="/favicon.svg" alt="" />
+          <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" />
           Трекер фінансів
         </div>
+        {DEMO && (
+          <div className={styles.demo}>
+            Демо-версія: дані зберігаються лише у вашому браузері.
+            <br />
+            Тестовий акаунт: <b>{DEMO_ACCOUNT.email}</b> / <b>{DEMO_ACCOUNT.password}</b>
+            <br />
+            <button type="button" onClick={() => setForm(DEMO_ACCOUNT)}>Підставити дані</button>
+          </div>
+        )}
         <Card>
           <h1 className={styles.title}>Вхід</h1>
           <p className="muted">Раді бачити знову</p>
