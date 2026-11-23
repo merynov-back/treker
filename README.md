@@ -4,7 +4,9 @@
 
 **Frontend:** HTML5 · CSS3 (CSS Modules) · JavaScript · React 19 · React Router · TanStack Query · Recharts · Vite
 **Backend:** Python 3.12 · FastAPI · PostgreSQL · SQLAlchemy 2 + Alembic · Redis
-**Інфраструктура:** Docker Compose · nginx · GitHub Actions
+**Інфраструктура:** Docker Compose · nginx · GitHub Actions · GitHub Pages
+
+**Демо:** https://merynov-back.github.io/treker/ — вхід `demo@treker.app` / `demo12345`
 
 ---
 
@@ -21,6 +23,7 @@
 ## Зміст
 
 - [Швидкий старт](#швидкий-старт)
+- [Демо на GitHub Pages](#демо-на-github-pages)
 - [Архітектура](#архітектура)
 - [Змінні оточення](#змінні-оточення)
 - [Розробка без Docker](#розробка-без-docker)
@@ -53,6 +56,25 @@ docker compose up -d --build
 Зареєструйся — і можна користуватись. Міграції застосовуються автоматично перед стартом API.
 
 > Згенерувати `JWT_SECRET_KEY`: `python3 -c "import secrets; print(secrets.token_urlsafe(64))"`
+
+---
+
+## Демо на GitHub Pages
+
+https://merynov-back.github.io/treker/
+
+GitHub Pages хостить лише статику, тому там працює окрема збірка фронтенду з `VITE_DEMO=true`: запити до API обробляє емулятор у браузері (`frontend/src/api/demo/`) з тими самими правилами й кодами помилок, що й бекенд. Дані зберігаються в `localStorage` — у кожного відвідувача свої.
+
+Для входу є тестовий акаунт з історією за три місяці: `demo@treker.app` / `demo12345`. Можна й зареєструватися.
+
+Збірку й публікацію робить `.github/workflows/pages.yml` на кожен push у `main`, що зачіпає `frontend/`. У звичайну збірку (Docker) код емулятора не потрапляє.
+
+Локально:
+
+```bash
+cd frontend
+VITE_DEMO=true npm run dev
+```
 
 ---
 
@@ -175,6 +197,7 @@ npm run build
 | `backend/tests/test_redis_service.py` | Кеш, сесії й ліміт входу |
 | `backend/tests/test_schemas.py` | Валідацію вхідних даних |
 | `frontend/src/utils/*.test.js` | Форматування сум і робота з періодами |
+| `frontend/src/api/demo/server.test.js` | Емулятор API для демо |
 
 ---
 
@@ -247,7 +270,7 @@ treker/
 │   │   └── utils/
 │   ├── nginx.conf
 │   └── Dockerfile
-├── .github/                   # CI і шаблон pull request
+├── .github/                   # CI, деплой на Pages, шаблон pull request
 ├── docker-compose.yml
 ├── .env.example
 └── CONTRIBUTING.md
