@@ -33,7 +33,7 @@ export default function RegisterPage() {
     <div className={styles.page}>
       <div className={styles.box}>
         <div className={styles.brand}>
-          <img src="/favicon.svg" alt="" />
+          <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" />
           Трекер фінансів
         </div>
         <Card>

@@ -5,6 +5,8 @@ import react from '@vitejs/plugin-react'
 const apiTarget = process.env.VITE_PROXY_TARGET ?? 'http://localhost:8001'
 
 export default defineConfig({
+  // Для GitHub Pages сайт живе в /treker/
+  base: process.env.VITE_BASE ?? '/',
   plugins: [react()],
   server: {
     port: 5173,

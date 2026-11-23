@@ -22,7 +22,7 @@ export default function AppLayout() {
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
         <NavLink to={{ pathname: '/', search }} className={styles.brand}>
-          <img src="/favicon.svg" alt="" className={styles.logo} />
+          <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className={styles.logo} />
           <span>Трекер</span>
         </NavLink>
 
